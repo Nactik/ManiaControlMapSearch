@@ -143,6 +143,7 @@ class MapList implements ManialinkPageAnswerListener, CallbackListener {
 		
 		// Get Maps
 		if (!is_array($mapList)) {
+			$this->searchedMapList = null;
 			$mapList = $this->maniaControl->getMapManager()->getMaps();
 		} else {
 			//If mapList isn't null => a research has been done 
@@ -582,7 +583,7 @@ class MapList implements ManialinkPageAnswerListener, CallbackListener {
 		switch ($action) {
 			case self::ACTION_UPDATE_MAP:
 				$this->maniaControl->getMapManager()->updateMap($player, $mapUid);
-				$this->showMapList($player,$this->searchedMapList);
+				$this->showMapList($player);
 				break;
 			case self::ACTION_REMOVE_MAP:
 				try {
@@ -653,11 +654,11 @@ class MapList implements ManialinkPageAnswerListener, CallbackListener {
 				break;
 			case self::ACTION_QUEUED_MAP:
 				$this->maniaControl->getMapManager()->getMapQueue()->addMapToMapQueue($callback[1][1], $mapUid);
-				$this->showMapList($player,$this->searchedMapList);
+				$this->showMapList($player);
 				break;
 			case self::ACTION_UNQUEUE_MAP:
 				$this->maniaControl->getMapManager()->getMapQueue()->removeFromMapQueue($player, $mapUid);
-				$this->showMapList($player,$this->searchedMapList);
+				$this->showMapList($player);
 				break;
 			default:
 				if (substr($actionId, 0, strlen(self::ACTION_PAGING_CHUNKS)) === self::ACTION_PAGING_CHUNKS) {
